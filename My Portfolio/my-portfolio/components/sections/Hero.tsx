@@ -132,7 +132,7 @@ export function Hero() {
               target="_blank" 
               className="border border-[var(--border-bright)] text-[var(--text-muted)] px-8 py-4 rounded-[4px] font-mono font-bold text-sm tracking-widest uppercase hover:text-[var(--accent-2)] whitespace-nowrap"
             >
-              Download Resume
+              Download Resume ↓
             </MagneticButton>
           </motion.div>
         </motion.div>
@@ -148,8 +148,13 @@ export function Hero() {
           className="w-full flex justify-center p-4 relative"
         >
           <div className="w-full max-w-md aspect-[3/4] lg:aspect-[4/5] lg:-rotate-1 lg:translate-y-4 relative">
-            <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,255,209,0.2)] pointer-events-none z-10" />
-            <PlaceholderImage label="[PROFILE PHOTO]" className="w-full h-full border border-[var(--border-bright)] scanlines animated-border opacity-90" />
+            <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,255,209,0.2)] pointer-events-none z-10 rounded-[4px]" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.jpg"
+              alt="Rushikesh Bhatjire"
+              className="w-full h-full object-cover object-top border border-[var(--border-bright)] rounded-[4px] animated-border"
+            />
           </div>
         </motion.div>
       </div>

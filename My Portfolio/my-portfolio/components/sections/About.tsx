@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { fadeUp, staggerContainer, viewportConfig } from "@/lib/animations";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { StatBlock } from "@/components/ui/StatBlock";
 import { stats } from "@/lib/data";
 
@@ -49,7 +48,12 @@ export function About() {
           className="w-full relative h-full lg:min-h-[600px]"
         >
           <div className="sticky top-24 w-full">
-            <PlaceholderImage label="[PROFILE / WORKSPACE PHOTO]" className="w-full aspect-square animated-border scanlines bg-[var(--bg)]" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/datacenter.png"
+              alt="Data Center Infrastructure"
+              className="w-full aspect-square object-cover object-center rounded-[4px] animated-border border border-[var(--border-bright)] shadow-[0_0_40px_rgba(0,255,209,0.1)]"
+            />
             <p className="font-mono text-xs text-[var(--text-muted)] mt-4 tracking-widest flex items-center">
               <span className="status-dot mr-3 shrink-0" /> AVAILABLE FOR HIRE · NASHIK, INDIA
             </p>
