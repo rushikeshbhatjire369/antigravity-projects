@@ -87,7 +87,7 @@ export const certifications = [
     issuer: "Amazon Web Services",
     date: "Sep 2024",
     id: "CHB3HPK7MVQ1CCR",
-    logo: "[AWS LOGO]",
+    logo: "/logos/aws.webp",
   },
   {
     title: "Red Hat Certified System Administrator",
@@ -95,7 +95,7 @@ export const certifications = [
     issuer: "Red Hat",
     date: "Apr 2022",
     id: "220-066-799",
-    logo: "[REDHAT LOGO]",
+    logo: "/logos/redhat.png",
   },
   {
     title: "Docker Foundations Professional Certificate",
@@ -103,7 +103,7 @@ export const certifications = [
     issuer: "Docker Inc.",
     date: "Mar 2025",
     id: "",
-    logo: "[DOCKER LOGO]",
+    logo: "/logos/docker.jpeg",
   },
 ]
 

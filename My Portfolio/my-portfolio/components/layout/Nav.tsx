@@ -50,8 +50,10 @@ export function Nav() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[rgba(10,10,10,0.85)] backdrop-blur-xl border-b border-[var(--border)] h-16 px-8 md:px-16 flex items-center justify-between">
-        <a href="#" className="font-display font-bold text-xl text-text">RB</a>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[rgba(1,5,8,0.92)] backdrop-blur-2xl border-b border-[rgba(0,255,209,0.08)] h-16 px-8 md:px-16 flex items-center justify-between">
+        <a href="#" className="relative group font-display font-bold text-xl text-gradient-cyan flex items-center">
+          RB<span className="status-dot ml-2" />
+        </a>
         
         <div className="hidden md:flex gap-8">
           {NAV_LINKS.map((link) => (
@@ -59,28 +61,28 @@ export function Nav() {
               key={link.href}
               href={link.href}
               className={cn(
-                "font-mono text-xs tracking-widest relative pb-1 group transition-colors",
-                active === link.href ? "text-accent" : "text-muted hover:text-text"
+                "font-mono text-[11px] tracking-[0.2em] uppercase relative pb-1 group transition-all duration-300",
+                active === link.href ? "text-[var(--accent)]" : "text-[var(--text-muted)] hover:text-[var(--accent)] hover:glow-text"
               )}
             >
               {link.label}
               <span className={cn(
-                "absolute left-0 bottom-0 h-px bg-accent transition-all duration-300",
+                "absolute left-0 bottom-0 h-px bg-[var(--accent)] transition-all duration-300",
                 active === link.href ? "w-full" : "w-0 group-hover:w-full"
               )} />
             </a>
           ))}
         </div>
 
-        <button className="md:hidden text-text" onClick={() => setIsOpen(true)}>
+        <button className="md:hidden text-[var(--accent)]" onClick={() => setIsOpen(true)}>
           <Menu />
         </button>
       </nav>
 
       {/* Mobile overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-[60] bg-bg flex flex-col justify-center items-center">
-          <button className="absolute top-5 right-8 text-text" onClick={() => setIsOpen(false)}>
+        <div className="fixed inset-0 z-[60] bg-[var(--bg)] grid-bg flex flex-col justify-center items-center">
+          <button className="absolute top-5 right-8 text-[var(--accent)]" onClick={() => setIsOpen(false)}>
             <X className="w-8 h-8" />
           </button>
           <div className="flex flex-col gap-8 items-center text-center">
@@ -89,10 +91,7 @@ export function Nav() {
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className={cn(
-                  "font-display text-4xl",
-                  active === link.href ? "text-accent" : "text-text"
-                )}
+                className="font-display text-4xl font-bold text-gradient-cyan"
               >
                 {link.label}
               </a>

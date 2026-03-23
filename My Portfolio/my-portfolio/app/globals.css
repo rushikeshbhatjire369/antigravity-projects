@@ -3,22 +3,192 @@
 @tailwind utilities;
 
 :root {
-  --bg:            #0A0A0A;
-  --surface:       #111111;
-  --surface-2:     #1A1A1A;
-  --border:        #222222;
-  --border-bright: #333333;
-  --accent:        #2563EB;
-  --accent-glow:   #3B82F6;
-  --highlight:     #F59E0B;
-  --text:          #F5F5F5;
-  --text-muted:    #6B7280;
-  --text-dim:      #374151;
-  --white:         #FFFFFF;
+  /* Backgrounds — deep space blacks with blue-green undertones */
+  --bg:              #010508;
+  --surface:         #060D12;
+  --surface-2:       #0A1520;
+  --surface-3:       #0F1E2E;
+
+  /* Borders — barely visible, electric on hover */
+  --border:          #0B2035;
+  --border-bright:   #1A4A72;
+  --border-active:   #00FFD1;
+
+  /* PRIMARY ACCENT — Terminal Cyan */
+  --accent:          #00FFD1;
+  --accent-dim:      #00CC9E;
+  --accent-glow:     rgba(0,255,209,0.15);
+
+  /* SECONDARY ACCENT — Deep Violet */
+  --accent-2:        #8B5CF6;
+  --accent-2-dim:    #6D40D4;
+  --accent-2-glow:   rgba(139,92,246,0.15);
+
+  /* TERTIARY — Amber Warning (for highlights/tags only) */
+  --accent-3:        #F59E0B;
+
+  /* Text */
+  --text:            #CDE8E1;    /* warm cyan-tinted white */
+  --text-muted:      #3D7A6F;    /* deep muted teal */
+  --text-dim:        #1A3530;    /* barely visible */
+
+  /* Status */
+  --online:          #00FFD1;
+  --white:           #FFFFFF;
 }
 
 body {
   background-color: var(--bg);
   color: var(--text);
   overflow-x: hidden;
+}
+
+/* Layer 3 — Corner glow orbs */
+body::before {
+  content: '';
+  position: fixed;
+  top: -100px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(rgba(0,255,209,0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -150px;
+  right: -150px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(rgba(139,92,246,0.05), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Noise texture overlay on surfaces */
+.noise::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Gradient text utility */
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #00FFD1 0%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Glow utilities */
+.glow-cyan  { box-shadow: 0 0 20px rgba(0,255,209,0.25), 0 0 60px rgba(0,255,209,0.08); }
+.glow-violet{ box-shadow: 0 0 20px rgba(139,92,246,0.25), 0 0 60px rgba(139,92,246,0.08); }
+.glow-text  { text-shadow: 0 0 20px rgba(0,255,209,0.5); }
+
+/* Scanline effect on cards */
+.scanlines {
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 2px,
+    rgba(0,255,209,0.015) 2px, rgba(0,255,209,0.015) 4px
+  );
+}
+
+/* Glitch animation */
+@keyframes glitch-shift {
+  0%,90%,100% { clip-path: none; transform: none; }
+  91% { clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%); transform: translateX(-3px); }
+  93% { clip-path: polygon(0 50%, 100% 50%, 100% 65%, 0 65%); transform: translateX(3px); }
+  95% { clip-path: polygon(0 70%, 100% 70%, 100% 85%, 0 85%); transform: translateX(-2px); }
+}
+.glitch {
+  position: relative;
+}
+.glitch::before {
+  content: attr(data-text);
+  position: absolute; top: 0; left: 0;
+  color: #00FFD1;
+  animation: glitch-shift 5s infinite;
+}
+.glitch::after {
+  content: attr(data-text);
+  position: absolute; top: 0; left: 0;
+  color: #8B5CF6;
+  animation: glitch-shift 5s infinite 0.1s;
+  opacity: 0.7;
+}
+
+/* Cursor blink */
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: var(--accent);
+}
+
+/* Online pulse dot */
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+.status-dot {
+  position: relative;
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+.status-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: ping 1.5s cubic-bezier(0,0,0.2,1) infinite;
+}
+
+/* Animated gradient border */
+@keyframes border-spin {
+  to { --angle: 360deg; }
+}
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.animated-border {
+  border: 1px solid transparent;
+  background: 
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    conic-gradient(from var(--angle), #00FFD1, #8B5CF6, #00FFD1) border-box;
+  animation: border-spin 4s linear infinite;
+}
+
+@supports not (background: conic-gradient(red, blue)) {
+  .animated-border { border: 1px solid var(--border-bright); }
+}
+
+/* Grid overlay */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0,255,209,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,209,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Section divider line */
+.section-line::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, #00FFD1, #8B5CF6);
+  margin-bottom: 20px;
 }

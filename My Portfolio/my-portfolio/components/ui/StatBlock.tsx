@@ -25,11 +25,12 @@ export function StatBlock({ value, suffix, label }: StatBlockProps) {
 
   return (
     <div ref={ref} className="flex flex-col gap-1">
-      <div className="font-display font-extrabold text-5xl md:text-6xl text-accent flex items-baseline">
-        <motion.span>{rounded}</motion.span>
-        <span>{suffix}</span>
+      <div className="font-display font-black text-[56px] md:text-[72px] flex items-baseline">
+        <motion.span className="text-gradient-cyan">{rounded}</motion.span>
+        <span className="text-[var(--accent)] opacity-70 ml-1">{suffix}</span>
       </div>
-      <span className="font-mono text-xs text-muted tracking-widest uppercase mt-2">{label}</span>
+      <div className="w-12 h-[2px] mt-2 bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)]" />
+      <span className="font-mono text-[10px] text-[var(--text-muted)] tracking-[0.25em] uppercase mt-2">{label}</span>
     </div>
   );
 }
